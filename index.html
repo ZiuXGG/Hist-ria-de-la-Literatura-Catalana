@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ca">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Història de la Literatura Catalana</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Montserrat:wght@300;400;600&display=swap"
+        rel="stylesheet">
+    <style>
+        :root {
+            --color-bg: #f9f7f2;
+            --color-accent: #8b4513;
+            /* Marró terrós clàssic */
+            --color-text: #2c2c2c;
+            --color-card: #ffffff;
+            --color-line: #d1bfa7;
+        }
+
+        body {
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            font-family: 'Montserrat', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        h1,
+        h2,
+        h3 {
+            font-family: 'Libre+Baskerville', serif;
+        }
+
+        /* Línia de temps central */
+        .timeline-container {
+            position: relative;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: var(--color-line);
+            transform: translateX(-50%);
+            border-radius: 2px;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-line {
+                left: 30px;
+            }
+        }
+
+        /* Targetes de període */
+        .period-card {
+            position: relative;
+            width: 45%;
+            margin-bottom: 60px;
+            background: var(--color-card);
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(139, 69, 19, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .period-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .period-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 15px 35px rgba(139, 69, 19, 0.15);
+        }
+
+        .period-card.left {
+            margin-left: 0;
+            margin-right: auto;
+        }
+
+        .period-card.right {
+            margin-left: auto;
+            margin-right: 0;
+        }
+
+        @media (max-width: 768px) {
+            .period-card {
+                width: calc(100% - 60px);
+                margin-left: 60px !important;
+            }
+        }
+
+        /* Marc per a la imatge */
+        .image-frame {
+            width: 100%;
+            height: 200px;
+            background: #e5e7eb;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            border: 2px solid #f3f4f6;
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Node de la línia */
+        .timeline-dot {
+            position: absolute;
+            top: 20px;
+            width: 24px;
+            height: 24px;
+            background: var(--color-accent);
+            border: 4px solid var(--color-bg);
+            border-radius: 50%;
+            z-index: 10;
+        }
+
+        .left .timeline-dot {
+            right: -12.5%;
+        }
+
+        .right .timeline-dot {
+            left: -12.5%;
+        }
+
+        @media (max-width: 768px) {
+            .timeline-dot {
+                left: -42px !important;
+            }
+        }
+
+        /* Tipografia específica */
+        .period-title {
+            color: var(--color-accent);
+            border-bottom: 2px solid var(--color-line);
+            padding-bottom: 8px;
+            margin-bottom: 12px;
+            font-size: 1.5rem;
+        }
+
+        .period-date {
+            font-weight: 600;
+            color: #6b7280;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .key-points li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 6px;
+        }
+
+        .key-points li::before {
+            content: '•';
+            position: absolute;
+            left: 0;
+            color: var(--color-accent);
+            font-weight: bold;
+        }
+
+        /* Botó de navegació cap amunt */
+        #scrollTop {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--color-accent);
+            color: white;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            z-index: 100;
+        }
+    </style>
+</head>
+
+<body class="p-4 md:p-8">
+
+    <header class="text-center mb-16 max-w-3xl mx-auto">
+        <h1 class="text-4xl md:text-5xl mb-4 text-gray-800">Línia de Temps de la Literatura Catalana</h1>
+        <p class="text-lg text-gray-600 font-light italic">Un recorregut històric pels fonaments i l'evolució de les
+            lletres catalanes.</p>
+        <div class="w-24 h-1 bg-[#8b4513] mx-auto mt-6"></div>
+    </header>
+
+    <div class="timeline-container">
+        <div class="timeline-line"></div>
+
+        <!-- 1. Homilies d'Organyà -->
+        <article class="period-card left p-6" id="period-1">
+            <div class="timeline-dot"></div>
+            <span class="period-date">Segle XII</span>
+            <h2 class="period-title">Homilies d'Organyà</h2>
+            <div class="image-frame">
+                <img src="image.jpg" alt="">
+            </div>
+            <p class="text-sm text-gray-700 leading-relaxed mb-4">
+                Considerades el <b><u>primer text literari escrit íntegrament en llengua catalana</u></b>. Es tracta
+                d'una col·lecció de <b>sermons</b> destinats a explicar els Evangelis al poble en la seva llengua
+                vulgar, trobades a la <b>rectoria d'Organyà</b>.
+            </p>
+            <ul class="key-points text-xs text-gray-600">
+                <li><b><u>Primer testimoni</u></b> de prosa literària catalana.</li>
+                <li><b>Descobriment històric</b> a l'església de Santa Maria d'Organyà.</li>
+                <li><b>Funció didàctica</b>: sermó llatí explicat en català.</li>
+                <li>Context de <b>transició del llatí</b> cap a la llengua autòctona.</li>
+            </ul>
+        </article>
+
+        <!-- 2. Edat Medieval -->
+        <article class="period-card right p-6" id="period-2">
+            <div class="timeline-dot"></div>
+            <span class="period-date">Segles XIII - XV</span>
+            <h2 class="period-title">Edat Medieval</h2>
+            <div class="image-frame">
+                <img src="image2.jpg" alt="">
+            </div>
+            <p class="text-sm text-gray-700 leading-relaxed mb-4">
+                L'època de <b><u>màxima esplendor</u></b> amb el sorgiment de la <b>koiné literària</b> i les grans
+                cròniques. <b>Ramon Llull</b> estableix les bases de la prosa filosòfica i científica, mentre que
+                <b>Ausiàs March</b> revoluciona la poesia.
+            </p>
+            <ul class="key-points text-xs text-gray-600">
+                <li><b>Ramon Llull</b>: primer escriptor que usa el català per a la <b>filosofia</b>.</li>
+                <li>Les <b><u>quatre grans Cròniques</u></b> (Jaume I, Desclot, Muntaner, el Cerimoniós).</li>
+                <li><b>Ausiàs March</b>: trencament amb la tradició trobadoresca i <b>poesia personal</b>.</li>
+                <li><b><u>Tirant lo Blanc</u></b>: considerada la primera novel·la moderna europea.</li>
+            </ul>
+        </article>
+
+        <!-- 3. Renaixement -->
+        <article class="period-card left p-6" id="period-3">
+            <div class="timeline-dot"></div>
+            <span class="period-date">Segle XVI</span>
+            <h2 class="period-title">Renaixement</h2>
+            <div class="image-frame">
+                <img src="image3.jpg" alt="">
+            </div>
+            <p class="text-sm text-gray-700 leading-relaxed mb-4">
+                Arriba la influència de l'<b><u>humanisme italià</u></b>, posant l'<b>ésser humà al centre</b> de tot.
+                Malgrat la pressió del castellà a la cort, es produeix una literatura culta que busca l'<b>equilibri</b>
+                i la <b>raó clàssica</b>.
+            </p>
+            <ul class="key-points text-xs text-gray-600">
+                <li><b>Pere Serafí</b>: introducció del <b>sonet</b> i el madrigal renaixentista.</li>
+                <li><b>Cristòfol Despuig</b> i els <b>"Col·loquis de la insigne ciutat de Tortosa"</b>.</li>
+                <li><b><u>Erasmisme</u></b>: corrent crític que defensa una religiositat interior.</li>
+                <li><b>Joan Timoneda</b> i la valoració de la <b>poesia popular</b> i tradicional.</li>
+            </ul>
+        </article>
+
+        <!-- 4. Barroc -->
+        <article class="period-card right p-6" id="period-4">
+            <div class="timeline-dot"></div>
+            <span class="period-date">Segle XVII</span>
+            <h2 class="period-title">Barroc</h2>
+            <div class="image-frame">
+                <img src="image4.jpg" alt="">
+            </div>
+            <p class="text-sm text-gray-700 leading-relaxed mb-4">
+                Un període marcat pel <b><u>pessimisme</u></b>, el <b>desengany</b> i una estètica recarregada i
+                artificiosa. La vida és vista com un <b>somni</b> i la mort esdevé l'única certesa absoluta del moment
+                històric.
+            </p>
+            <ul class="key-points text-xs text-gray-600">
+                <li><b>Francesc Vicent Garcia</b>: el cèlebre <b><u>Rector de Vallfogona</u></b>.</li>
+                <li>Estil artificiós amb <b>contrastos</b> de llum, ombra, bellesa i lletjor.</li>
+                <li><b>"Vallfogonisme"</b>: fenomen d'imitació de l'obra de Garcia.</li>
+                <li>Temàtica del <b><u>memento mori</u></b> i la brevetat de la vida.</li>
+            </ul>
+        </article>
+
+        <!-- 5. Decadència -->
+        <article class="period-card left p-6" id="period-5">
+            <div class="timeline-dot"></div>
+            <span class="period-date">Segle XVIII - XIX (Inici)</span>
+            <h2 class="period-title">Decadència</h2>
+            <div class="image-frame">
+                <img src="image5.jpg" alt="">
+            </div>
+            <p class="text-sm text-gray-700 leading-relaxed mb-4">
+                Conseqüència directa dels <b><u>Decrets de Nova Planta (1716)</u></b>, que <b>prohibeixen l'ensenyament
+                    i l'ús oficial</b> del català. La llengua sobreviu gràcies a les <b>classes populars</b> i la
+                tradició oral.
+            </p>
+            <ul class="key-points text-xs text-gray-600">
+                <li><b><u>Decrets de Nova Planta</u></b>: pèrdua de l'oficialitat del català.</li>
+                <li><b>Joan Ramis</b>: la tragèdia neoclàssica <b>"Lucrècia"</b> escrita a Menorca.</li>
+                <li><b>Literatura de canya i cordill</b>: plecs solts venuts al carrer.</li>
+                <li><b><u>Il·lustració</u></b>: <b>Baldiri Reixac</b> i les "Instruccions per a minyons".</li>
+            </ul>
+        </article>
+
+        <!-- 6. Renaixença -->
+        <article class="period-card right p-6" id="period-6">
+            <div class="timeline-dot"></div>
+            <span class="period-date">Mitjan Segle XIX</span>
+            <h2 class="period-title">Renaixença</h2>
+            <div class="image-frame">
+                <img src="image6.jpg" alt="">
+            </div>
+            <p class="text-sm text-gray-700 leading-relaxed mb-4">
+                Moviment cultural i nacional que busca <b><u>recuperar el prestigi literari</u></b> del català. El
+                <b>Romanticisme</b> impulsa la recerca de les arrels medievals i la <b>identitat pròpia</b> del país.
+            </p>
+            <ul class="key-points text-xs text-gray-600">
+                <li><b>Bonaventura Carles Aribau</b> i l'oda <b><u>"La pàtria" (1833)</u></b>.</li>
+                <li><b>Jacint Verdaguer</b>: el gran poeta de <b>"Canigó"</b> i <b>"L'Atlàntida"</b>.</li>
+                <li>Restauració dels <b><u>Jocs Florals el 1859</u></b> sota el lema "Pàtria, Fe i Amor".</li>
+                <li><b>Àngel Guimerà</b> i el ressorgiment del <b>teatre</b> i el drama català.</li>
+            </ul>
+        </article>
+    </div>
+
+    <footer class="text-center mt-20 pb-10 text-gray-500 text-sm">
+        <p>© 2026 INS Damia Campeny: Youssef Sadik Cherabi i Reda Harrak Benslaiman</p>
+    </footer>
+
+    <div id="scrollTop" onclick="window.scrollTo(0, 0)">↑</div>
+
+    <script>
+        // Animació d'aparició de les targetes al fer scroll
+        const observerOptions = {
+            threshold: 0.1
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.period-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Control del botó "Scroll to Top"
+        window.onscroll = function () {
+            const btn = document.getElementById("scrollTop");
+            if (document.body.scrollTop > 500 || document.documentElement.scrollTop > 500) {
+                btn.style.display = "block";
+            } else {
+                btn.style.display = "none";
+            }
+        };
+    </script>
+</body>
+
+</html>
